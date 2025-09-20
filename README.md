@@ -1,69 +1,57 @@
-# React + TypeScript + Vite
+# CozyCommerce Starter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository bootstraps a Vite + React + TypeScript playground for experimenting with the CozyCommerce demo look and feel. Supabase, React Router, and Tailwind CSS are prewired so you can begin stitching together product, cart, and auth experiences immediately.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js 20+ (the project was created with Node 22)
+- npm 10+
+- A Supabase project with access to the project URL and anon key
 
-## Expanding the ESLint configuration
+## Environment variables
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Copy `.env.example` to `.env.local` (or `.env`) and provide your Supabase credentials:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+VITE_SUPABASE_URL="https://your-project.supabase.co"
+VITE_SUPABASE_ANON_KEY="your-anon-key"
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+These variables are consumed by `src/supabaseClient.ts` to configure the client SDK.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Getting started
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Install dependencies and start the Vite dev server:
+
+```bash
+npm install
+npm run dev
 ```
+
+By default the app runs at [http://localhost:5173](http://localhost:5173). The CozyCommerce-inspired landing page demonstrates Tailwind theming and React Router navigation.
+
+## Available scripts
+
+- `npm run dev` – start Vite in development mode with hot module replacement.
+- `npm run build` – type-check the project and create an optimized production build in `dist/`.
+- `npm run preview` – preview the production build locally after running `npm run build`.
+
+## Project structure
+
+```
+.
+├── index.html
+├── package.json
+├── public/
+├── src/
+│   ├── App.tsx
+│   ├── index.css
+│   ├── main.tsx
+│   └── supabaseClient.ts
+├── tailwind.config.ts
+├── tsconfig.app.json
+├── tsconfig.json
+└── tsconfig.node.json
+```
+
+Use the `supabase` instance exported from `src/supabaseClient.ts` inside your React components or data loaders to interact with your backend.
